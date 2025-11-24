@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+spring:
+  application:
+    name: chat
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  ai:
+    openai:
+      api-key:
 
-</body>
-</html>
+  datasource:
+    url: jdbc:h2:mem:gs_witchen
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console

@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Dashboard da Cozinha</title>
+    <meta charset="UTF-8"/>
 </head>
 <body>
-$END$
+<h1>📋 Planos de Preparo</h1>
+<table border="1">
+    <tr>
+        <th>#</th>
+        <th>Plano</th>
+    </tr>
+    <tr th:each="plano, iterStat : ${planos}">
+        <td th:text="${iterStat.index + 1}"></td>
+        <td th:text="${plano}"></td>
+    </tr>
+</table>
 </body>
 </html>

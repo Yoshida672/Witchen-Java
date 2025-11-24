@@ -6,6 +6,8 @@ import lombok.*;
 @Entity
 @Table(name = "item_pedido")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
