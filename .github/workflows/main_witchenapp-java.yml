@@ -41,6 +41,6 @@ jobs:
       with:
         app-name: 'witchenapp-java'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BFA6314D456149098BE7368DC1E524CC}}
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2727946B9FE04C45AA41BC2B9471231E}}
         package: ${{ env.JAR }}
         
