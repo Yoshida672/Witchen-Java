@@ -1,7 +1,6 @@
 # 🍽 GS Witchen - Sistema de Gestão de Restaurante
 
-[Assista ao Pitch 🎥](https://www.youtube.com/watch?v=8fjv8DE_ems) | [Aplicação em Nuvem 🌐](http://witchenapp-java.azurewebsites.net/)
-
+[Assista ao Pitch 🎥](https://www.youtube.com/watch?v=8fjv8DE_ems) | [Aplicação em Nuvem 🌐](http://witchenapp-java.azurewebsites.net/) | [Assista A Solução](https://youtu.be/bHdYfySNo0s)
 ---
 
 ## 🔹 Descrição do Projeto
@@ -95,3 +94,4 @@ O sistema está publicado no **Azure App Service**, com deploy contínuo via Git
 - Senhas e acessos são simplificados para fins de demonstração.  
 - Este projeto é focado em **demonstração acadêmica e prototipagem**.  
 - Para desenvolvimento local, configure o **SQL Server** e variáveis de ambiente conforme instruções do projeto.
+
