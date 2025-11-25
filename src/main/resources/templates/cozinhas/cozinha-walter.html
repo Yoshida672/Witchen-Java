@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{cozinha.titulo}"></title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: radial-gradient(circle at top, #1a0033, #0a0015);
+            color: #f2e7ff;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #b16dff;
+            letter-spacing: 2px;
+        }
+
+        .painel {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .card-pedido {
+            background: linear-gradient(145deg, #150028, #240040);
+            border: 1px solid #7a2cff;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 0 20px rgba(122, 44, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-pedido:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(122, 44, 255, 0.5);
+        }
+
+        .titulo {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #d9b3ff;
+        }
+
+        .info {
+            margin: 6px 0;
+            font-size: 14px;
+        }
+
+        .tempo {
+            font-weight: bold;
+            color: #ff6bff;
+            font-size: 16px;
+        }
+
+        ul {
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        button, .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #7a2cff, #4b00aa);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        button:hover, .btn:hover {
+            background: linear-gradient(145deg, #8e44ff, #5a00cc);
+        }
+
+    </style>
+</head>
+<body>
+
+<h1 >🔮<span th:text=" #{cozinha.titulo}"></span> </h1>
+
+<div class="painel">
+
+    <div th:each="pedido : ${pedidos}" class="card-pedido">
+
+        <div class="titulo">
+            🍽 <span th:text="#{cozinha.pedido}"></span> #<span th:text="${pedido.idPedido()}"></span>
+        </div>
+
+        <div class="info">
+            <strong th:text="#{cozinha.mesa} + ':'"></strong>
+            <span th:text="${pedido.mesa()}"></span>
+        </div>
+
+        <div class="info">
+            <strong th:text="#{cozinha.tempoEsperando} + ':'"></strong>
+            <span class="tempo"
+                  th:attr="data-id=${pedido.idPedido()}"
+                  th:text="${pedido.minutosEsperando()}">
+            </span> <span th:text="min"></span>
+        </div>
+
+        <div class="info">
+            <strong th:text="#{cozinha.itens} + ':'"></strong>
+            <ul>
+                <li th:each="item : ${pedido.itens()}">
+                    <span th:text="${item.nomeProduto()}"></span> -
+                    <span th:text="${item.quantidade()}"></span>x
+                </li>
+            </ul>
+        </div>
+
+        <div class="acoes">
+            <form th:action="@{/cozinha/finalizar}" method="post">
+                <input type="hidden" name="id" th:value="${pedido.idPedido()}">
+                <button type="submit">✅ <span th:text="#{cozinha.pronto}"></span></button>
+            </form>
+
+            <a th:href="@{/cozinha/plano/{id}(id=${pedido.idPedido()})}" class="btn">
+                📺 <span th:text="#{cozinha.verPlano}"></span>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function atualizarTempos() {
+        document.querySelectorAll(".tempo").forEach(span => {
+            const pedidoId = span.dataset.id;
+
+            fetch(`/cozinha/tempo/${pedidoId}`)
+                .then(res => res.text())
+                .then(minutos => {
+                    span.innerText = minutos;
+                })
+                .catch(err => console.error("Erro ao atualizar tempo:", err));
+        });
+    }
+
+    setInterval(atualizarTempos, 10000);
+</script>
+
+</body>
+</html>
