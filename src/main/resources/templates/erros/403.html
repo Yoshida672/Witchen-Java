@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{erro.acessoNegado.titulo}">Acesso Negado</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0d1b2a;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .erro-box {
+            background: #1b263b;
+            padding: 30px 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            max-width: 420px;
+        }
+
+        h1 {
+            color: #e63946;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #4cc9f0;
+            color: #0d1b2a;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        a:hover {
+            background: #90dbf4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="erro-box">
+    <h1>🚫 <span th:text="#{erro.acessoNegado.titulo}">Acesso Negado</span></h1>
+    <p th:text="#{erro.acessoNegado.mensagem}">Você não tem permissão para acessar esta área.</p>
+    <a th:href="@{/dashboard}" th:text="#{erro.acessoNegado.voltar}">Voltar ao sistema</a>
+</div>
+
+</body>
+</html>

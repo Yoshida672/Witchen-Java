@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{comandas.titulo}"></title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #1a0033, #0a0015);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f2e7ff;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #150028, #240040);
+            border: 1px solid #7a2cff;
+            border-radius: 16px;
+            padding: 30px;
+            width: 380px;
+            box-shadow: 0 0 25px rgba(122, 44, 255, 0.4);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #b16dff;
+            letter-spacing: 1px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #d9b3ff;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #7a2cff;
+            margin-bottom: 15px;
+            background: #0f001a;
+            color: white;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #9b59ff;
+            box-shadow: 0 0 5px rgba(155, 89, 255, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(145deg, #7a2cff, #4b00aa);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #9b59ff, #5a00cc);
+        }
+
+        .erro {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 50, 100, 0.15);
+            border: 1px solid #ff4b7d;
+            color: #ff9cb8;
+        }
+
+        .voltar {
+            margin-top: 15px;
+            display: inline-block;
+            color: #b16dff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .voltar:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1 th:text="#{comanda.nova.titulo}">🍽 Nova Comanda</h1>
+
+    <form th:action="@{/comandas/novo}"
+          th:object="${comanda}"
+          method="post">
+
+        <label th:text="#{comanda.numeroMesa}">Número da Mesa</label>
+        <input type="number"
+               name="mesaId"
+               th:value="${comanda.mesaId}"
+               placeholder="Ex: 5"
+               required>
+
+        <button type="submit" th:text="#{comanda.criar}">✅ Criar Comanda</button>
+    </form>
+
+    <div th:if="${erro}" class="erro">
+        <p th:text="${erro}"></p>
+    </div>
+
+    <a th:href="@{/comandas}" th:text="#{comanda.voltar}">⬅ Voltar para comandas</a>
+
+</div>
+
+</body>
+</html>

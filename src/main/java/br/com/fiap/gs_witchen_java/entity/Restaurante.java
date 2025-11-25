@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "restaurante")
+@Table(name = "Restaurantes")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,9 +16,11 @@ public class Restaurante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_restaurante")
+
     private Integer idRestaurante;
 
-    @Column(nullable = false)
+    @Column(name="nome_restaurante",nullable = false)
     private String nomeRest;
 
     @Column(nullable = false, unique = true, length = 18)
@@ -39,6 +39,8 @@ public class Restaurante {
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Produto> produtos = new ArrayList<>();
+
+
 
     // Métodos de negócio
     public void atualizarNome(String nome) {
@@ -85,10 +87,4 @@ public class Restaurante {
         mesas.add(mesa);
     }
 
-    public void adicionarProduto(Produto produto) {
-        if (produto == null) {
-            throw new IllegalArgumentException("Produto inválido.");
-        }
-        produtos.add(produto);
-    }
 }

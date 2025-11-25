@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{planoIA.titulo}">Walter - Plano IA</title>
+
+    <style>
+        body {
+            background: radial-gradient(circle at center, #120022, #05000a);
+            color: #eee0ff;
+            font-family: Consolas, monospace;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #b16dff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #1b0033;
+            border: 2px solid #7a2cff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(122, 44, 255, 0.4);
+        }
+
+        .pedido-info {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .plano {
+            background: black;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #7a2cff;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            font-size: 15px;
+            color: #c9a3ff;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            background: #7a2cff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: white;
+        }
+
+        a:hover {
+            background: #8e44ff;
+        }
+    </style>
+</head>
+<body>
+<h1>📺 <span th:text="#{planoIA.titulo}">Telão - Plano da IA</span></h1>
+
+<div class="container">
+
+    <div class="pedido-info">
+        <p>
+            <strong th:text="#{planoIA.pedido} + ':'">Pedido:</strong>
+            #<span th:text="${pedido.idPedido()}"></span>
+        </p>
+        <p>
+            <strong th:text="#{planoIA.mesa} + ':'">Mesa:</strong>
+            <span th:text="${pedido.mesa()}"></span>
+        </p>
+    </div>
+
+    <div class="plano" th:text="${pedido.planoIA()}"></div>
+
+    <div style="text-align:center">
+        ⬅ <a th:href="@{/cozinha}"><span th:text="#{planoIA.voltar}">Voltar para Cozinha</span></a>
+    </div>
+
+</div>
+
+
+</body>
+</html>

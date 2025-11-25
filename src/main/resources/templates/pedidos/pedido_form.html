@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{pedido.titulo}">Adicionar Pedido</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 30px;
+            background: radial-gradient(circle at top, #1a0033, #0a0015);
+            color: #f2e7ff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #b16dff;
+            letter-spacing: 2px;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        .produtos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, #150028, #240040);
+            border: 1px solid #7a2cff;
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(122, 44, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 25px rgba(122, 44, 255, 0.6);
+        }
+
+        .product-card h3 {
+            color: #d9b3ff;
+            margin-bottom: 8px;
+        }
+
+        .descricao {
+            font-size: 13px;
+            color: #c7b3ff;
+            margin-bottom: 5px;
+        }
+
+        .preco {
+            font-size: 14px;
+            margin: 8px 0;
+            color: #ff9bff;
+            font-weight: bold;
+        }
+
+        .contador {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .contador button {
+            background: #7a2cff;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 18px;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .contador button:hover {
+            background: #9b59ff;
+        }
+
+        .contador input {
+            width: 50px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #7a2cff;
+            background: #0f001a;
+            color: #fff;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: linear-gradient(145deg, #7a2cff, #4b00aa);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 20px 10px;
+            display: inline-block;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: linear-gradient(145deg, #9b59ff, #5a00cc);
+        }
+
+        .acoes {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🧾 <span th:text="#{pedido.titulo}">Adicionar Pedido</span></h1>
+
+<form th:action="@{/comandas/pedidos/novo(comandaId=${comandaId})}"
+      th:object="${pedido}"
+      method="post">
+
+    <div class="produtos-container">
+
+        <div th:each="item, stat : *{itens}" class="product-card">
+
+            <h3 th:text="${produtos[__${stat.index}__].nome()}">Produto</h3>
+
+            <p class="descricao" th:text="${produtos[__${stat.index}__].ingredientes()}">
+                <span th:text="#{pedido.descricao}">Descrição</span>
+            </p>
+
+            <p class="preco">
+                <span th:text="#{pedido.preco}">R$</span>
+                <span th:text="${produtos[__${stat.index}__].preco()}">0.00</span>
+            </p>
+
+            <div class="contador">
+                <button type="button"
+                        onclick="alterarQuantidade(this, -1)">-</button>
+
+                <input type="number"
+                       th:field="*{itens[__${stat.index}__].quantidade}"
+                       min="0" value="0"/>
+
+                <button type="button"
+                        onclick="alterarQuantidade(this, 1)">+</button>
+            </div>
+
+            <input type="hidden" th:field="*{itens[__${stat.index}__].produtoId}" />
+
+        </div>
+
+    </div>
+
+    <div class="acoes">
+        <button type="submit" class="btn">✅ <span th:text="#{pedido.adicionar}">Adicionar ao Pedido</span></button>
+        <a th:href="@{/comandas}" class="btn">⬅ <span th:text="#{pedido.voltar}">Voltar</span></a>
+    </div>
+
+</form>
+
+<script>
+    function alterarQuantidade(botao, valor) {
+        const input = botao.parentElement.querySelector("input");
+        let atual = parseInt(input.value) || 0;
+        atual += valor;
+
+        if (atual < 0) atual = 0;
+
+        input.value = atual;
+    }
+</script>
+
+</body>
+</html>

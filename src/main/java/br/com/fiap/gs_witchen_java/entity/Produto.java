@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "produto")
+@Table(name = "Produtos")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,6 +16,8 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IdProduto")
+
     private Integer idProduto;
 
     @Column(nullable = false)
@@ -29,16 +29,17 @@ public class Produto {
     @Column(nullable = false)
     private String ingredientesProduto;
 
-    @Column(name = "restaurante_id")
+    @Column(name = "RestauranteId")
     private Integer restauranteId;
 
     @ManyToOne
-    @JoinColumn(name = "restaurante_id", insertable = false, updatable = false)
+    @JoinColumn(name = "RestauranteId", insertable = false, updatable = false)
     private Restaurante restaurante;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<ItemPedido> itensPedidos = new ArrayList<>();
+
 
     // Métodos de negócio
     public void atualizarNome(String novoNome) {
@@ -61,6 +62,4 @@ public class Produto {
         }
         this.ingredientesProduto = novosIngredientes;
     }
-    public double getPrecoProduto() { return precoProduto; }
-    public void setPrecoProduto(double precoProduto) { this.precoProduto = precoProduto; }
 }

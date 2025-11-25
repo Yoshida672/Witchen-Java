@@ -6,10 +6,8 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "pagamento")
+@Table(name = "Pagamentos")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -17,13 +15,15 @@ public class Pagamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IdPagamento")
+
     private Integer idPagamento;
 
-    @Column(name = "comanda_id")
+    @Column(name = "ComandaId")
     private Integer comandaId;
 
     @OneToOne
-    @JoinColumn(name = "comanda_id", insertable = false, updatable = false)
+    @JoinColumn(name = "ComandaId", insertable = false, updatable = false)
     private Comanda comanda;
 
     private double valorTotal;
@@ -50,7 +50,9 @@ public class Pagamento {
         this.status = "Concluído";
         this.dataPagamento = LocalDateTime.now();
     }
-
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.toUpperCase();
+    }
     public void cancelar() {
         this.status = "Cancelado";
     }

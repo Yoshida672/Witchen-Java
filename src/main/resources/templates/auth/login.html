@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{login.titulo}"></title>
+
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #120022, #05000a);
+            font-family: Consolas, monospace;
+            color: #e6d4ff;
+            position: relative;
+        }
+
+        .lang-buttons {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .btn-lang {
+            color: #b16dff;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+
+        .btn-lang:hover {
+            text-decoration: underline;
+        }
+
+        .login-box {
+            background: #1b0033;
+            padding: 40px;
+            border-radius: 16px;
+            width: 370px;
+            box-shadow: 0 0 30px rgba(122, 44, 255, 0.4);
+            border: 2px solid #7a2cff;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #b16dff;
+            text-shadow: 0 0 8px rgba(177, 109, 255, 0.6);
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: none;
+            background: #26004d;
+            color: white;
+            outline: none;
+        }
+
+        input:focus {
+            box-shadow: 0 0 8px #7a2cff;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #7a2cff;
+            border: none;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #8e44ff;
+            box-shadow: 0 0 12px #8e44ff;
+        }
+
+        .error {
+            margin-top: 15px;
+            color: #ff6b6b;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="lang-buttons">
+    <a th:href="@{/login(lang='pt-BR')}" class="btn-lang">PT-BR</a> |
+    <a th:href="@{/login(lang='en')}" class="btn-lang">EN</a>
+</div>
+
+<div class="login-box">
+    <h2 th:text="#{login.titulo}">🔐 GS Witchen - Login</h2>
+
+    <form th:action="@{/login}" method="post">
+        <input type="text" name="username" th:placeholder="#{login.usuario}">
+        <input type="password" name="password" th:placeholder="#{login.senha}">
+        <button type="submit" th:text="#{login.entrar}">Entrar</button>
+
+        <div th:if="${param.error}" class="error" th:text="#{login.erro}">Usuário ou senha inválidos.</div>
+        <div th:if="${param.logout}" th:text="#{login.logout}">Você saiu do sistema</div>
+    </form>
+</div>
+
+</body>
+</html>

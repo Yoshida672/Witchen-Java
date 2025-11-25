@@ -4,10 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "item_pedido")
+@Table(name = "ProdPedidos")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -15,29 +13,32 @@ public class ItemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IdItemPedido")
     private Integer idItemPedido;
 
-    @Column(name = "comanda_id")
+    @Column(name = "ComandaId")
     private Integer comandaId;
 
-    @ManyToOne
-    @JoinColumn(name = "pedido_id")
-    private Pedido pedido;
-
-    @Column(name = "pedido_id", insertable = false, updatable = false)
+    @Column(name = "PedidoId")
     private Integer pedidoId;
 
-    @Column(name = "produto_id")
+    @ManyToOne
+    @JoinColumn(name = "PedidoId", insertable = false, updatable = false)
+    private Pedido pedido;
+
+    @Column(name = "ProdutoId")
     private Integer produtoId;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id", insertable = false, updatable = false)
+    @JoinColumn(name = "ProdutoId", insertable = false, updatable = false)
     private Produto produto;
 
+    @Column(name = "Quantidade")
     private Integer quantidade;
 
     @Transient
     public double calcularSubtotal() {
         return quantidade * produto.getPrecoProduto();
     }
+
 }

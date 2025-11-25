@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "mesa")
+@Table(name = "Mesas")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,6 +16,8 @@ public class Mesa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IdMesa")
+
     private Integer idMesa;
 
     private Integer numero;
@@ -25,17 +25,20 @@ public class Mesa {
     @Builder.Default
     private String status = "Livre";
 
-    @Column(name = "restaurante_id")
+    @Column(name = "RestauranteId")
     private Integer restauranteId;
 
     @ManyToOne
-    @JoinColumn(name = "restaurante_id", insertable = false, updatable = false)
+    @JoinColumn(name = "RestauranteId", insertable = false, updatable = false)
     private Restaurante restaurante;
 
     @OneToMany(mappedBy = "mesa", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Comanda> comandas = new ArrayList<>();
 
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.toUpperCase();
+    }
     @Transient
     public Comanda getComandaAtiva() {
         return comandas.stream()
@@ -43,6 +46,5 @@ public class Mesa {
                 .findFirst()
                 .orElse(null);
     }
-    public void setStatus(String status) { this.status = status; }
-    public String getStatus() { return status; }
+
 }
