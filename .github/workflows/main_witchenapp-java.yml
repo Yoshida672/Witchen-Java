@@ -21,13 +21,26 @@ jobs:
       with:
         java-version: '17'
     
-    - name: Build with Maven
-      run: mvn clean install
+    - name: Grant execute permission to gradlew
+      run: chmod +x ./gradlew
+      
+    - name: Build with Gradle
+      env: 
+          SPRING_AI_KEY: ${{secrets.SPRING_AI_KEY}}
+          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+      run: ./gradlew build
+    
+    - name: Find the latest JAR file
+      id: find-jar
+      run: echo "JAR=$(find $GITHUB_WORKSPACE/build/libs -name '*.jar' -print -quit)" >> $GITHUB_ENV
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
-      with: 
+      with:
         app-name: 'witchenapp-java'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_2727946b9fe04c45aa41bc2b9471231e }}
-        package: '${{ github.workspace }}/target/*.jar'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BFA6314D456149098BE7368DC1E524CC}}
+        package: ${{ env.JAR }}
+        
